@@ -19,6 +19,7 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => 'api'], function () use ($router) {
   Route::group(['middleware' => ['auth', 'role:parent']], function () use ($router) {
     $router->post('register-child', 'AuthController@registerChild');
+    $router->post('family/create', 'FamilyController@store');
   });
   Route::group(['middleware' => 'auth'], function () use ($router) {
     $router->get('profile', 'UserController@profile');

@@ -73,6 +73,7 @@ class AuthController extends Controller
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
+            // 'photo' => 'mimes:jpg,jpeg,png'
         ]);
 
         try {
@@ -84,6 +85,12 @@ class AuthController extends Controller
             $user->password = app('hash')->make($plainPassword);
 
             $user->assignRole('child');
+
+            ($request->file('photo') != null) ? $namaPhoto = str_random().'.'.$request->file('photo')->getClientOriginalExtension() : $namaPhoto = null;
+
+            $user->photo = $namaPhoto;
+
+            ($request->file('photo') != null) ? $request->file('photo')->move(base_path().('/public/photo_profile'), $namaPhoto) : null;
 
             $user->save();
 

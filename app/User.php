@@ -20,7 +20,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email'
+        'name', 'email', 'hp', 'status', 'address', 'photo', 'id_family'
     ];
 
     /**
@@ -50,5 +50,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function family()
+    {
+        return $this->belongsTo('App\Family', 'id_family');
     }
 }
