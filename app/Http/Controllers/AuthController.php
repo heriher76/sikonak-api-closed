@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -86,11 +87,11 @@ class AuthController extends Controller
 
             $user->assignRole('child');
 
-            ($request->file('photo') != null) ? $namaPhoto = str_random().'.'.$request->file('photo')->getClientOriginalExtension() : $namaPhoto = null;
+            ($request->file('photo') != null) ? $namaPhoto = Str::random(32).'.'.$request->file('photo')->getClientOriginalExtension() : $namaPhoto = null;
 
             $user->photo = $namaPhoto;
 
-            ($request->file('photo') != null) ? $request->file('photo')->move(base_path().('/public/photo_profile'), $namaPhoto) : null;
+            ($request->file('photo') != null) ? $request->file('photo')->move(base_path().('/public/photo-profile'), $namaPhoto) : null;
 
             $user->save();
 
