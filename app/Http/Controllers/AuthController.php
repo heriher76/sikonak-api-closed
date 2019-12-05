@@ -44,6 +44,9 @@ class AuthController extends Controller
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
+            'hp' => 'string',
+            'address' => 'string',
+            'status' => 'string'
         ]);
 
         try {
@@ -53,8 +56,17 @@ class AuthController extends Controller
             $user->email = $request->input('email');
             $plainPassword = $request->input('password');
             $user->password = app('hash')->make($plainPassword);
+            $user->hp = $request->input('hp');
+            $user->address = $request->input('address');
+            $user->status = $request->input('status');
 
             $user->assignRole('parent');
+
+            ($request->file('photo') != null) ? $namaPhoto = Str::random(32).'.'.$request->file('photo')->getClientOriginalExtension() : $namaPhoto = null;
+
+            $user->photo = $namaPhoto;
+
+            ($request->file('photo') != null) ? $request->file('photo')->move(base_path().('/public/photo-profile'), $namaPhoto) : null;
 
             $user->save();
 
@@ -84,6 +96,7 @@ class AuthController extends Controller
             $user->email = $request->input('email');
             $plainPassword = $request->input('password');
             $user->password = app('hash')->make($plainPassword);
+            $user->id_family = Auth::user()->family->id;
 
             $user->assignRole('child');
 

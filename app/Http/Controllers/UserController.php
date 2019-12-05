@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use  App\User;
+use App\User;
 
 class UserController extends Controller
 {
@@ -34,7 +34,9 @@ class UserController extends Controller
      */
     public function allUsers()
     {
-         return response()->json(['users' =>  User::all()], 200);
+        $iam = Auth::user();
+
+        return response()->json(['users' =>  $iam->family->users], 200);
     }
 
     /**
@@ -46,6 +48,11 @@ class UserController extends Controller
     {
         try {
             $user = User::findOrFail($id);
+            $iam = Auth::user();
+
+            if ($iam->family->id !== $user->family->id) {
+                return response()->json(['message' => 'Cannot See Profile'], 403);
+            }
 
             return response()->json(['user' => $user], 200);
 
