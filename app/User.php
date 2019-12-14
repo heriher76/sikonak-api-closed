@@ -56,4 +56,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return $this->belongsTo('App\Family', 'id_family');
     }
+
+    public function events()
+    {
+        return $this->hasMany('App\Event', 'id_user');
+    }
 }

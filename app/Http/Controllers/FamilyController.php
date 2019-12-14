@@ -36,4 +36,25 @@ class FamilyController extends Controller
           return response()->json(['message' => 'Family Registration Failed!'], 409);
       }
   }
+
+  public function update(Request $request)
+  {
+      //validate incoming request
+      $this->validate($request, [
+          'name' => 'required|string'
+      ]);
+
+      try {
+          $user = Auth::user();
+
+          $user->family->name = $request->input('name');
+
+          $user->family->save();
+          //return successful response
+          return response()->json(['family' => $user->family, 'message' => 'Family Updated'], 200);
+      } catch (\Exception $e) {
+          //return error message
+          return response()->json(['message' => 'Family Update Failed!'], 409);
+      }
+  }
 }

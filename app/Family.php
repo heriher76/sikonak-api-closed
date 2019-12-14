@@ -19,4 +19,9 @@ class Family extends Model
     {
         return $this->hasMany('App\User', 'id_family');
     }
+
+    public function events()
+    {
+        return $this->hasMany('App\Event', 'id_family');
+    }
 }
