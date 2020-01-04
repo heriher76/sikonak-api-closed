@@ -10,13 +10,22 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+$router->options(
+    '/{any:.*}',
+    [
+        'middleware' => ['CorsMiddleware'],
+        function (){
+            return response(['status' => 'success']);
+        }
+    ]
+);
 
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
 // API route group
-$router->group(['prefix' => 'api'], function () use ($router) {
+$router->group(['prefix' => 'api', 'middleware' => 'CorsMiddleware'], function () use ($router) {
   Route::group(['middleware' => ['auth', 'role:parent']], function () use ($router) {
     $router->post('register-child', 'AuthController@registerChild');
     $router->post('family/create', 'FamilyController@store');

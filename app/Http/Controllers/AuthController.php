@@ -71,11 +71,11 @@ class AuthController extends Controller
             $user->save();
 
             //return successful response
-            return response()->json(['user' => $user, 'message' => 'PARENT CREATED'], 201);
+            return response()->json(['user' => $user, 'message' => 'Berhasil Register!'], 201);
 
         } catch (\Exception $e) {
             //return error message
-            return response()->json(['message' => 'User Registration Failed!'], 409);
+            return response()->json(['message' => 'Registrasi Gagal!'], 409);
         }
     }
 
@@ -109,11 +109,11 @@ class AuthController extends Controller
             $user->save();
 
             //return successful response
-            return response()->json(['user' => $user, 'message' => 'CHILD CREATED'], 201);
+            return response()->json(['user' => $user, 'message' => 'Register Anak Berhasil!'], 201);
 
         } catch (\Exception $e) {
             //return error message
-            return response()->json(['message' => 'User Registration Failed!'], 409);
+            return response()->json(['message' => 'Register Anak Gagal!'], 409);
         }
     }
 }
