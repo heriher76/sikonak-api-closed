@@ -45,6 +45,12 @@ $router->group(['prefix' => 'api', 'middleware' => 'CorsMiddleware'], function (
     $router->post('event/create', 'EventController@store');
     $router->put('event/update/{id}', 'EventController@update');
     $router->delete('event/delete/{id}', 'EventController@destroy');
+    //LOCATION
+    $router->put('location/update', 'LocationController@update');
+    $router->get('location/{id}', 'LocationController@getLocation');
+    //MESSAGE
+    $router->get('messages', 'ChatsController@fetchMessages');
+    $router->post('messages/create', 'ChatsController@sendMessage');
   });
   $router->post('register', 'AuthController@register'); // register parent
   $router->post('login', 'AuthController@login'); // login all

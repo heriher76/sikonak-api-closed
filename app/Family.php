@@ -24,4 +24,9 @@ class Family extends Model
     {
         return $this->hasMany('App\Event', 'id_family');
     }
+
+    public function messages()
+    {
+      return $this->hasMany('App\Message', 'id_family');
+    }
 }

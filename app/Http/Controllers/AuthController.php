@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -27,8 +28,14 @@ class AuthController extends Controller
         if (! $token = Auth::attempt($credentials)) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
+        $user = JWTAuth::user();
 
-        return $this->respondWithToken($token);
+        // return $this->respondWithToken($token);
+        return response()->json([
+          'error' => false,
+          'token' => 'Bearer '.$token,
+          'user' => $user
+        ]);
     }
 
     /**

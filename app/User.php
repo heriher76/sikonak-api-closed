@@ -61,4 +61,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return $this->hasMany('App\Event', 'id_user');
     }
+
+    public function location()
+    {
+        return $this->hasOne('App\Location', 'id_user');
+    }
+
+    public function messages()
+    {
+      return $this->hasMany('App\Message', 'id_user');
+    }
 }
